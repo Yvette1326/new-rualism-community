@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neu云盘</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: white;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1e2b3c;
+        }
+
+        .logo i {
+            color: #4a90e2;
+            font-size: 24px;
+        }
+
+        .user-menu {
+            color: #5f6b7a;
+            cursor: default;
+        }
+
+        /* 主要内容区 */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* 云盘卡片 */
+        .drive-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            border: 1px solid #edf0f5;
+        }
+
+        .drive-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #edf0f5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drive-header h2 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1e2b3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drive-header h2 i {
+            color: #4a90e2;
+        }
+
+        .file-count {
+            color: #8a99aa;
+            font-size: 14px;
+        }
+
+        /* 文件列表 */
+        .file-list {
+            padding: 8px 0;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-bottom: 1px solid #f0f3f8;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-item:hover {
+            background-color: #f8faff;
+        }
+
+        .file-icon {
+            font-size: 28px;
+            width: 40px;
+            color: #4a90e2;
+            margin-right: 16px;
+            text-align: center;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #1e2b3c;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .file-meta {
+            display: flex;
+            gap: 20px;
+            color: #8a99aa;
+            font-size: 13px;
+        }
+
+        .file-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .file-meta i {
+            font-size: 12px;
+        }
+
+        /* 模态框 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 380px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1e2b3c;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8a99aa;
+            padding: 4px;
+        }
+
+        .close-btn:hover {
+            color: #1e2b3c;
+        }
+
+        .modal-body {
+            background-color: #f8faff;
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            border: 1px dashed #4a90e2;
+        }
+
+        .invite-code {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e2b3c;
+            letter-spacing: 2px;
+            background-color: white;
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e6ebf2;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-primary {
+            background-color: #4a90e2;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+        }
+
+        /* 提示 */
+        .hint {
+            margin-top: 16px;
+            color: #8a99aa;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-cloud"></i>
+            <span>Neu云盘</span>
+        </div>
+        <div class="user-menu">
+            <i class="far fa-user-circle"></i> 访客
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="drive-card">
+            <div class="drive-header">
+                <h2><i class="fas fa-folder-open"></i> 我的文件</h2>
+                <span class="file-count">1 个项目</span>
+            </div>
+            <div class="file-list">
+                <!-- 单个文件：邀请码to Lily -->
+                <div class="file-item" id="memo-file">
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">邀请码to Lily.txt</div>
+                        <div class="file-meta">
+                            <span><i class="far fa-file"></i> 纯文本</span>
+                            <span><i class="far fa-calendar"></i> 2026-09-01</span>
+                            <span><i class="far fa-save"></i> 128 B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hint">
+            <i class="fas fa-info-circle" style="color: #4a90e2;"></i> 点击文件可在线预览
+        </div>
+    </div>
+
+    <!-- 模态框（显示邀请码） -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-lock-open" style="color: #4a90e2;"></i> 备忘录内容</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="invite-code">newrua#998</div>
+                <p style="margin-top: 16px; color: #5f6b7a;">请妥善保管此邀请码，严禁借用给他人</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="closeBtn">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const fileItem = document.getElementById('memo-file');
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const closeBtn = document.getElementById('closeBtn');
+
+            // 点击文件显示模态框
+            fileItem.addEventListener('click', function() {
+                modal.classList.add('show');
+            });
+
+            // 关闭模态框的函数
+            function closeModal() {
+                modal.classList.remove('show');
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            // 点击模态框背景（遮罩）也关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 按ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

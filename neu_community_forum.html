@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纽如社区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #1a472a;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #2e8b57;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* 搜索栏样式 */
+        .search-container {
+            background-color: #f0f7f2;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: #2e8b57;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+        }
+        
+        .search-btn {
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: #1a472a;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .forum-section {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .section-title {
+            color: #1a472a;
+            border-bottom: 2px solid #2e8b57;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        /* 用户信息样式 */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #2e8b57;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+        
+        .user-info h2 {
+            color: #1a472a;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 帖子区域 */
+        .posts-container {
+            margin-top: 30px;
+        }
+        
+        .post-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e8e8e8;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .post-author {
+            font-weight: 500;
+            color: #1a472a;
+        }
+        
+        .post-date {
+            color: #888;
+        }
+        
+        .post-content {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* 转发引用样式 */
+        .quote-content {
+            background-color: #f0f7f2;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2e8b57;
+            margin-bottom: 20px;
+            color: #1a472a;
+        }
+        
+        .forward-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        /* 图片容器样式 */
+        .post-images-container {
+            margin-bottom: 20px;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-style: italic;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .image-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .image-placeholder-text {
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .image-caption {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background-color: #e8f5e9;
+            color: #1a472a;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: #c8e6c9;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-title {
+            color: #1a472a;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            color: #1a472a;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .info-value {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 登录区域 */
+        .login-container {
+            background-color: #f0f7f2;
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #c8e6c9;
+            margin-bottom: 30px;
+        }
+        
+        .login-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #1a472a;
+            border-bottom: 3px solid #2e8b57;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #1a472a;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #2e8b57;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+        }
+        
+        .btn {
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #1a472a;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1a472a;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        
+        .footer-text {
+            opacity: 0.8;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .user-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 页面切换 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* 根茎冥想曲特殊样式 */
+        .root-meditation {
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 会员URL提示样式 */
+        .member-url-hint {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #5d4037;
+        }
+        
+        .member-url-hint code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #1a472a;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🌱</div>
+                    <div class="logo-text">
+                        <h1>纽如社区</h1>
+                        <p>新田园主义 · 连接自然与心灵</p>
+                    </div>
+                </div>
+                <div class="user-status" id="user-status">
+                    <!-- 登录状态显示区域 -->
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 登录页面 -->
+    <div class="container page active" id="login-page">
+        <!-- 已移除搜索框 -->
+        
+        <div class="main-content">
+            <!-- 左侧主要内容 -->
+            <div class="forum-section">
+                <h2 class="section-title">社区论坛</h2>
+                
+                <!-- 登录区域 -->
+                <div class="login-container">
+                    <div class="login-tabs">
+                        <div class="tab active" data-tab="regular">普通用户登录</div>
+                        <div class="tab" data-tab="member">会员访问</div>
+                    </div>
+                    
+                    <!-- 普通用户登录 -->
+                    <div class="tab-content active" id="regular-tab">
+                        <div class="form-group">
+                            <label for="invite-code">邀请码</label>
+                            <input type="text" id="invite-code" class="form-control" placeholder="请输入您的邀请码">
+                        </div>
+                        <button class="btn" id="regular-login-btn">登录论坛</button>
+                    </div>
+                    
+                    <!-- 会员访问 -->
+                    <div class="tab-content" id="member-tab">
+                        <div class="form-group">
+                            <label for="member-url">会员访问URL</label>
+                            <input type="text" id="member-url" class="form-control" placeholder="请输入完整的会员访问URL">
+                            <div class="member-url-hint">
+                                格式：<code>root://celium.core/forum?key=密钥</code><br>
+                                提示：培养植物的秘诀在于 = 脱壳:授粉:嫁接
+                            </div>
+                        </div>
+                        <button class="btn" id="member-access-btn">访问会员区</button>
+                    </div>
+                </div>
+                
+                <!-- 帖子预览区域 -->
+                <div class="posts-container">
+                    <h3 class="section-title">最新帖子预览</h3>
+                    
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月30日</div>
+                        </div>
+                        <div class="post-content">
+                            我将度过有史以来最快乐的一次假期！终于找到了内心的平静，感谢纽如社区带我找到了人生的新方向。最近获得了新种子，已经种下了，期待它发芽成长。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="心灵成长">#心灵成长</span>
+                            <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                            <span class="tag" data-tag="种子">#种子</span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月28日</div>
+                        </div>
+                        <div class="post-content">
+                            最近在尝试用音乐配合植物养护，发现<span class="root-meditation">《根茎冥想曲》</span>效果特别好。音乐与植物的结合，能产生意想不到的和谐共振。我也种下了新种子，和Lily一起期待发芽。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                            <span class="tag" data-tag="植物嫁接">#植物嫁接</span>
+                            <span class="tag" data-tag="冥想">#冥想</span>
+                            <span class="tag" data-tag="根茎冥想曲">#根茎冥想曲</span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月27日</div>
+                        </div>
+                        <div class="post-content">
+                            最近在研究网络协议，发现了一个有趣的三阶段密钥系统。这种分层设计很像植物生长的过程：脱壳、授粉、嫁接。我种下的新种子也在按照这个节奏生长。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="网络协议">#网络协议</span>
+                            <span class="tag" data-tag="编程">#编程</span>
+                            <span class="tag" data-tag="种子">#种子</span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Adam</div>
+                            <div class="post-date">2026年8月25日</div>
+                        </div>
+                        <div class="post-content">
+                            发表了新论文《现代焦虑的植物性解决方案》，探讨了现代社会中植物疗法对心理健康的积极作用。希望能帮助更多人找到内心的宁静。我也开始了新种子的培育。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="学术研究">#学术研究</span>
+                            <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                            <span class="tag" data-tag="心理健康">#心理健康</span>
+                            <span class="tag" data-tag="现代焦虑">#现代焦虑</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧侧边栏 -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">关于纽如社区</h3>
+                    <p>纽如社区是一个致力于探索新田园主义生活方式的在线社区。我们相信通过与自然的深度连接，人类可以找到内心的平静与生活的意义。</p>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">社区统计</h3>
+                    <div class="info-item">
+                        <div class="info-label">注册会员</div>
+                        <div class="info-value">999+ 人</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">在线用户</div>
+                        <div class="info-value">52 人</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">今日帖子</div>
+                        <div class="info-value">15 篇</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">热门话题</h3>
+                    <div class="post-tags" style="margin-top: 10px;">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                        <span class="tag" data-tag="冥想">#冥想</span>
+                        <span class="tag" data-tag="心理健康">#心理健康</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lily主页 -->
+    <div class="container page" id="lily-homepage">
+        <!-- 搜索栏 -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="lily-search-input" placeholder="搜索用户、标签或内容...">
+                <button class="search-btn" id="lily-search-btn">搜索</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 左侧主要内容 -->
+            <div class="forum-section">
+                <!-- 用户信息 -->
+                <div class="user-profile">
+                    <div class="user-avatar">L</div>
+                    <div class="user-info">
+                        <h2>Lily</h2>
+                        <p>加入时间：2026年8月15日 | 状态：在线</p>
+                    </div>
+                </div>
+                
+                <!-- 帖子区域 -->
+                <div class="posts-container">
+                    <h3 class="section-title">Lily的帖子</h3>
+                    
+                    <!-- 转发帖子（真实转发样式） -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月31日</div>
+                        </div>
+                        <div class="forward-meta">
+    🔁 转发了 <a href="#" onclick="showPage('official-homepage'); return false;" style="color: #1a472a; text-decoration: underline; text-decoration-style: dotted; font-weight: 500;">@纽如社区官方</a> 的帖子
+</div>
+                        <div class="quote-content">
+                            纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                                <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                            </div>
+                            <div class="image-caption">转发自社区官方账号</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子1：行李箱图片 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月30日</div>
+                        </div>
+                        <div class="post-content">
+                            打包好行李，准备出发！这将是我有史以来最快乐的一次假期，我找到了内心的平静，感谢纽如社区带我找到了人生的新方向。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="lily_suitcase.jpg">
+                                <div class="image-placeholder-text">图片：lily_suitcase.jpg</div>
+                            </div>
+                            <div class="image-caption">我的行李箱，准备开启心灵之旅</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="旅行">#旅行</span>
+                            <span class="tag" data-tag="假期">#假期</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子2：心理指数对比 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月25日</div>
+                        </div>
+                        <div class="post-content">
+                            加入纽如社区后，我的心理健康指数明显上升！从之前的40升到了现在的90，焦虑感大大减轻。新田园主义真的改变了我的生活。
+                        </div>
+                        <!-- 双图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-grid">
+                                <div>
+                                    <div class="image-placeholder" data-image="lily_mental_index_1.jpg">
+                                        <div class="image-placeholder-text">图片：lily_mental_index_1.jpg</div>
+                                    </div>
+                                    <div class="image-caption">加入社区前的心理健康指数：40</div>
+                                </div>
+                                <div>
+                                    <div class="image-placeholder" data-image="lily_mental_index_2.jpg">
+                                        <div class="image-placeholder-text">图片：lily_mental_index_2.jpg</div>
+                                    </div>
+                                    <div class="image-caption">加入社区后的心理健康指数：90</div>
+                                </div>
+                            </div>
+                            <div class="image-caption" style="margin-top: 10px;">手表上心理健康指数对比，证明确实舒缓了焦虑</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="心理健康">#心理健康</span>
+                            <span class="tag" data-tag="焦虑缓解">#焦虑缓解</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子3：新种子 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月20日</div>
+                        </div>
+                        <div class="post-content">
+                            今天收到了纽如社区寄来的新种子！据说是特别培育的品种，能帮助心灵成长。我已经按照指导种下了，期待它发芽成长的过程。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="lily_new_seeds.jpg">
+                                <div class="image-placeholder-text">图片：lily_new_seeds.jpg</div>
+                            </div>
+                            <div class="image-caption">纽如社区寄来的新种子</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                            <span class="tag" data-tag="种子">#种子</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子4：与Monica的友情 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Lily</div>
+                            <div class="post-date">2026年8月18日</div>
+                        </div>
+                        <div class="post-content">
+                            今天和Monica一起参加了社区活动，我们认识了更多志同道合的朋友。Monica给我分享了<span class="root-meditation">《根茎冥想曲》</span>，听的时候真的能感受到心灵与植物的连接。
+                        </div>
+                        <!-- 文本内容 -->
+                        <div class="post-content" style="font-style: italic; color: #666; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+                            Monica是和我同校的音乐专业的学生，她告诉我音乐与植物之间有奇妙的共鸣。我们一起听了<span class="root-meditation">《根茎冥想曲》</span>，那是一种特殊的音乐，据说能促进植物生长，也能帮助人类放松心灵。她是我在社区里认识的第一个朋友。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="友情">#友情</span>
+                            <span class="tag" data-tag="冥想">#冥想</span>
+                            <span class="tag" data-tag="Monica">#Monica</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧侧边栏 -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">关于Lily</h3>
+                    <p>Lily是纽如社区的第998位成员，于2026年8月加入。她通过社区找到了缓解焦虑的方法，并积极参与社区活动。</p>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">统计信息</h3>
+                    <div class="info-item">
+                        <div class="info-label">发帖数</div>
+                        <div class="info-value">16 篇</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">获赞数</div>
+                        <div class="info-value">247 次</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">关注者</div>
+                        <div class="info-value">42 人</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">加入时间</div>
+                        <div class="info-value">2026年8月15日</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">好友列表</h3>
+                    <div class="info-item">
+                        <div class="info-label">Monica</div>
+                        <div class="info-value">音乐专业学生</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Tommy</div>
+                        <div class="info-value">程序员</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Adam</div>
+                        <div class="info-value">学者</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">常用标签</h3>
+                    <div class="post-tags" style="margin-top: 10px;">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                        <span class="tag" data-tag="心理健康">#心理健康</span>
+                        <span class="tag" data-tag="冥想">#冥想</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Adam主页 -->
+<div class="container page" id="adam-homepage">
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" id="adam-search-input" placeholder="搜索用户、标签或内容...">
+            <button class="search-btn" id="adam-search-btn">搜索</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- 左侧主要内容 -->
+        <div class="forum-section">
+            <!-- 用户信息 -->
+            <div class="user-profile">
+                <div class="user-avatar">A</div>
+                <div class="user-info">
+                    <h2>Adam</h2>
+                    <p>加入时间：2026年7月12日 | 职业：独立学者 · 植物疗法研究者</p>
+                </div>
+            </div>
+
+            <!-- 帖子区域 -->
+            <div class="posts-container">
+                <h3 class="section-title">Adam的帖子</h3>
+
+                <!-- 转发帖子（官方欢迎帖） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Adam</div>
+                        <div class="post-date">2026年8月31日</div>
+                    </div>
+                    <div class="forward-meta">
+                        🔁 转发了 <a href="#" onclick="showPage('official-homepage'); return false;" style="color: #1a472a; text-decoration: underline; text-decoration-style: dotted; font-weight: 500;">@纽如社区官方</a> 的帖子
+                    </div>
+                    <div class="quote-content">
+                        纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                            <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                        </div>
+                        <div class="image-caption">转发自社区官方账号</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                    </div>
+                </div>
+
+                <!-- 帖子1：发表论文《现代焦虑的植物性解决方案》 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Adam</div>
+                        <div class="post-date">2026年8月25日</div>
+                    </div>
+                    <div class="post-content">
+                        终于完成了这篇论文：《现代焦虑的植物性解决方案》。<br><br>
+                        过去两年我一直在观察都市人群与植物的互动关系，发现规律性的园艺活动可以显著降低皮质醇水平、提升主观幸福感。这篇论文整理了12例个案研究和初步的生理指标数据，希望能为植物疗法提供更坚实的学术支持。<br><br>
+                        论文已开放预印本，也可在网上同步免费下载，欢迎交流指正。🌿
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="adam_paper_cover.jpg">
+                            <div class="image-placeholder-text">图片：adam_paper_cover.jpg</div>
+                        </div>
+                        <div class="image-caption">论文预印本封面 · 开放获取</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="学术研究">#学术研究</span>
+                        <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                        <span class="tag" data-tag="心理健康">#心理健康</span>
+                        <span class="tag" data-tag="现代焦虑">#现代焦虑</span>
+                    </div>
+                </div>
+
+                <!-- 帖子2：收到新种子并种下 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Adam</div>
+                        <div class="post-date">2026年8月18日</div>
+                    </div>
+                    <div class="post-content">
+                        收到了纽如社区寄来的新种子。📦<br>
+                        附带的说明卡上写着：“愿你在照料植物的同时，也被植物照料。”<br><br>
+                        我把它种在书桌旁的花盆里，期待发芽的那天。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="adam_new_seeds.jpg">
+                            <div class="image-placeholder-text">图片：adam_new_seeds.jpg</div>
+                        </div>
+                        <div class="image-caption">刚刚种下，标记了日期</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                        <span class="tag" data-tag="种子">#种子</span>
+                    </div>
+                </div>
+
+                <!-- 帖子3：休学告知（最早发帖） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Adam</div>
+                        <div class="post-date">2026年8月5日</div>
+                    </div>
+                    <div class="post-content">
+                        经过一段时间的考虑，我决定向学校申请休学一年。<br><br>
+                        不是因为学业困难，而是想更专注地完成我的植物疗法田野调查。城市绿地、社区园艺、甚至每个人的窗台——我想知道植物究竟能在多大程度上改善现代人的精神状态。听说纽如社区在8月30日会有一场线下交流会，我应该会在那里认识许多志同道合的人吧。<br><br>
+                        总之，这个决定让我有些不安，但也充满期待。如果有同样在做相关研究的朋友，希望能在这里认识你。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="休学">#休学</span>
+                        <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                        <span class="tag" data-tag="田野调查">#田野调查</span>
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">统计信息</h3>
+                <div class="info-item">
+                    <div class="info-label">发帖数</div>
+                    <div class="info-value">17 篇</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">获赞数</div>
+                    <div class="info-value">364 次</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">关注者</div>
+                    <div class="info-value">81 人</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">加入时间</div>
+                    <div class="info-value">2026年7月12日</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">学术专长</h3>
+                <div class="info-item">
+                    <div class="info-label">研究领域</div>
+                    <div class="info-value">园艺疗法、环境心理学</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">代表作</div>
+                    <div class="info-value">《现代焦虑的植物性解决方案》</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">当前项目</div>
+                    <div class="info-value">社区园艺干预效果追踪</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">常用标签</h3>
+                <div class="post-tags" style="margin-top: 10px;">
+                    <span class="tag" data-tag="学术研究">#学术研究</span>
+                    <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                    <span class="tag" data-tag="心理健康">#心理健康</span>
+                    <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- Monica主页 -->
+    <div class="container page" id="monica-homepage">
+        <!-- 搜索栏 -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="monica-search-input" placeholder="搜索用户、标签或内容...">
+                <button class="search-btn" id="monica-search-btn">搜索</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 左侧主要内容 -->
+            <div class="forum-section">
+                <!-- 用户信息 -->
+                <div class="user-profile">
+                    <div class="user-avatar">M</div>
+                    <div class="user-info">
+                        <h2>Monica</h2>
+                        <p>加入时间：2026年7月28日 | 职业：音乐专业学生</p>
+                    </div>
+                </div>
+                
+                <!-- 帖子区域 -->
+                <div class="posts-container">
+                    <h3 class="section-title">Monica的帖子</h3>
+                    
+                    <!-- 转发帖子（真实转发样式） -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月31日</div>
+                        </div>
+                        <div class="forward-meta">
+    🔁 转发了 <a href="#" onclick="showPage('official-homepage'); return false;" style="color: #1a472a; text-decoration: underline; text-decoration-style: dotted; font-weight: 500;">@纽如社区官方</a> 的帖子
+</div>
+                        <div class="quote-content">
+                            纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                                <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                            </div>
+                            <div class="image-caption">转发自社区官方账号</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子1：音乐与植物 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月28日</div>
+                        </div>
+                        <div class="post-content">
+                            最近在尝试用音乐配合植物养护，发现<span class="root-meditation">《根茎冥想曲》</span>效果特别好。音乐与植物的结合，能产生意想不到的和谐共振。据说这种音乐能促进植物生长，也能帮助人类放松心灵。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="monica_music_plant.jpg">
+                                <div class="image-placeholder-text">图片：monica_music_plant.jpg</div>
+                            </div>
+                            <div class="image-caption">我的音乐工作室，正在为植物播放<span class="root-meditation">《根茎冥想曲》</span></div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                            <span class="tag" data-tag="植物嫁接">#植物嫁接</span>
+                            <span class="tag" data-tag="冥想">#冥想</span>
+                            <span class="tag" data-tag="根茎冥想曲">#根茎冥想曲</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子2：与Lily的友情 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月22日</div>
+                        </div>
+                        <div class="post-content">
+                            今天和Lily一起参加了社区活动，我们认识了更多志同道合的朋友。她是个特别敏感的女孩，能感受到植物细微的变化。我给她分享了<span class="root-meditation">《根茎冥想曲》</span>，她说听的时候真的能感受到心灵与植物的连接。
+                        </div>
+                        <!-- 文本内容 -->
+                        <div class="post-content" style="font-style: italic; color: #666; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+                            Lily是和我同校的同学，她最近焦虑感很重。我推荐她加入纽如社区，她似乎在这里找到了内心的平静。看到她心理指数从40升到90，我真的为她高兴。她是我在社区里最好的朋友之一。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="友情">#友情</span>
+                            <span class="tag" data-tag="Lily">#Lily</span>
+                            <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子3：新种子 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月18日</div>
+                        </div>
+                        <div class="post-content">
+                            收到了纽如社区寄来的新种子！据说是特别培育的品种，能帮助心灵与音乐的融合。我已经按照指导种下了，期待它发芽成长的过程。我会用音乐陪伴它的生长。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="monica_new_seeds.jpg">
+                                <div class="image-placeholder-text">图片：monica_new_seeds.jpg</div>
+                            </div>
+                            <div class="image-caption">纽如社区寄来的新种子，准备种下</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                            <span class="tag" data-tag="种子">#种子</span>
+                            <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子4：与Tommy的关系 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月15日</div>
+                        </div>
+                        <div class="post-content">
+                            今天和Tommy一起讨论了音乐与编程的关系。他说音乐和代码都是通过特定的"语言"来创造和谐。Tommy真是个有趣的人，虽然他是程序员，但对音乐也有很深的理解。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="monica_tommy.jpg">
+                                <div class="image-placeholder-text">图片：monica_tommy.jpg</div>
+                            </div>
+                            <div class="image-caption">和Tommy在校园里讨论音乐与代码的和谐</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="Tommy">#Tommy</span>
+                            <span class="tag" data-tag="音乐与代码">#音乐与代码</span>
+                            <span class="tag" data-tag="和谐">#和谐</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子5：植物嫁接 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Monica</div>
+                            <div class="post-date">2026年8月10日</div>
+                        </div>
+                        <div class="post-content">
+                            尝试了植物嫁接实验，将两种不同习性的植物结合在一起。在这个过程中播放<span class="root-meditation">《根茎冥想曲》</span>，发现植物的生长速度比预期快了20%。音乐真的能影响植物的生长节奏。
+                        </div>
+                        <!-- 双图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-grid">
+                                <div>
+                                    <div class="image-placeholder" data-image="monica_grafting_1.jpg">
+                                        <div class="image-placeholder-text">图片：monica_grafting_1.jpg</div>
+                                    </div>
+                                    <div class="image-caption">嫁接前的两种植物</div>
+                                </div>
+                                <div>
+                                    <div class="image-placeholder" data-image="monica_grafting_2.jpg">
+                                        <div class="image-placeholder-text">图片：monica_grafting_2.jpg</div>
+                                    </div>
+                                    <div class="image-caption">嫁接后7天的生长情况</div>
+                                </div>
+                            </div>
+                            <div class="image-caption" style="margin-top: 10px;">植物嫁接实验，配合<span class="root-meditation">《根茎冥想曲》</span>效果显著</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="植物嫁接">#植物嫁接</span>
+                            <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                            <span class="tag" data-tag="实验">#实验</span>
+                            <span class="tag" data-tag="根茎冥想曲">#根茎冥想曲</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧侧边栏（无关于Monica介绍） -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">统计信息</h3>
+                    <div class="info-item">
+                        <div class="info-label">发帖数</div>
+                        <div class="info-value">29 篇</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">获赞数</div>
+                        <div class="info-value">512 次</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">关注者</div>
+                        <div class="info-value">78 人</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">加入时间</div>
+                        <div class="info-value">2026年7月28日</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">音乐偏好</h3>
+                    <div class="info-item">
+                        <div class="info-label">推荐音乐</div>
+                        <div class="info-value"><span class="root-meditation">《根茎冥想曲》</span>14:44</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">研究领域</div>
+                        <div class="info-value">植物声学与音乐疗法</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">常用乐器</div>
+                        <div class="info-value">大提琴、合成器</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">常用标签</h3>
+                    <div class="post-tags" style="margin-top: 10px;">
+                        <span class="tag" data-tag="音乐疗法">#音乐疗法</span>
+                        <span class="tag" data-tag="植物嫁接">#植物嫁接</span>
+                        <span class="tag" data-tag="根茎冥想曲">#根茎冥想曲</span>
+                        <span class="tag" data-tag="冥想">#冥想</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tommy主页 -->
+    <div class="container page" id="tommy-homepage">
+        <!-- 搜索栏 -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="tommy-search-input" placeholder="搜索用户、标签或内容...">
+                <button class="search-btn" id="tommy-search-btn">搜索</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 左侧主要内容 -->
+            <div class="forum-section">
+                <!-- 用户信息 -->
+                <div class="user-profile">
+                    <div class="user-avatar">T</div>
+                    <div class="user-info">
+                        <h2>Tommy</h2>
+                        <p>加入时间：2026年8月5日 | 职业：程序员</p>
+                    </div>
+                </div>
+                
+                <!-- 帖子区域 -->
+                <div class="posts-container">
+                    <h3 class="section-title">Tommy的帖子</h3>
+                    
+                    <!-- 转发帖子（真实转发样式） -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月31日</div>
+                        </div>
+                        <div class="forward-meta">
+    🔁 转发了 <a href="#" onclick="showPage('official-homepage'); return false;" style="color: #1a472a; text-decoration: underline; text-decoration-style: dotted; font-weight: 500;">@纽如社区官方</a> 的帖子
+</div>
+                        <div class="quote-content">
+                            纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                                <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                            </div>
+                            <div class="image-caption">转发自社区官方账号</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        </div>
+                    </div>
+                    
+                   <!-- 帖子1：网络协议与三阶段密钥（新文案） -->
+<div class="post-item">
+    <div class="post-header">
+        <div class="post-author">Tommy</div>
+        <div class="post-date">2026年8月27日</div>
+    </div>
+    <div class="post-content">
+        最近在逆向分析一套分布式认证协议，发现它的核心验证流程被设计成三个独立的阶段——很像植物从种子到成熟必经的三次蜕变。<br><br>
+        第一阶段剥离外壳，暴露真实身份；第二阶段交换凭证，像花粉在个体间传递；第三阶段将验证过的信任关系永久嫁接进系统根系。<br><br>
+        协议文档里把这套机制叫作 <strong>脱壳·授粉·嫁接</strong>。<br><br>
+        我试着把这种三层结构写进了自己的密钥管理系统，测试了一周，入侵检测日志零报警，连接成功率提升了37%。<br><br>
+        植物从来不讲效率，但它们的生存策略往往最接近最优解。🌿
+    </div>
+    <!-- 图片占位符 -->
+    <div class="post-images-container">
+        <div class="image-placeholder" data-image="tommy_network_diagram.jpg">
+            <div class="image-placeholder-text">图片：tommy_network_diagram.jpg</div>
+        </div>
+        <div class="image-caption">网络协议三阶段密钥系统示意图</div>
+    </div>
+    <div class="post-tags">
+        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+        <span class="tag" data-tag="网络协议">#网络协议</span>
+        <span class="tag" data-tag="编程">#编程</span>
+        <span class="tag" data-tag="三阶段密钥">#三阶段密钥</span>
+    </div>
+</div>
+                    
+                    <!-- 帖子2：与Monica的关系 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月20日</div>
+                        </div>
+                        <div class="post-content">
+                            今天和Monica一起讨论了音乐与编程的关系。我说音乐和代码都是通过特定的"语言"来创造和谐。她给我分享了<span class="root-meditation">《根茎冥想曲》</span>，确实有种奇妙的秩序感。代码和音乐本质上都是结构的艺术。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="tommy_monica_coding.jpg">
+                                <div class="image-placeholder-text">图片：tommy_monica_coding.jpg</div>
+                            </div>
+                            <div class="image-caption">和Monica一起研究代码与音乐的和谐</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="Monica">#Monica</span>
+                            <span class="tag" data-tag="编程">#编程</span>
+                            <span class="tag" data-tag="音乐与代码">#音乐与代码</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子3：新种子 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月16日</div>
+                        </div>
+                        <div class="post-content">
+                            今天收到了纽如社区寄来的新种子！据说是特别培育的品种，能帮助思维清晰和专注力提升。作为程序员，这对我来说太重要了。我已经按照指导种下了，期待它发芽成长的过程。
+                        </div>
+                        <!-- 图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-placeholder" data-image="tommy_new_seeds.jpg">
+                                <div class="image-placeholder-text">图片：tommy_new_seeds.jpg</div>
+                            </div>
+                            <div class="image-caption">纽如社区寄来的新种子，准备种下</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                            <span class="tag" data-tag="种子">#种子</span>
+                            <span class="tag" data-tag="专注力">#专注力</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子4：代码与自然的和谐 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月12日</div>
+                        </div>
+                        <div class="post-content">
+                            写代码写到深夜，突然意识到计算机的递归算法和植物的分形生长模式有惊人的相似性。都是基于简单的规则产生复杂的结构。也许这就是为什么我觉得纽如社区的哲学这么吸引人——自然和代码在底层都是相通的。
+                        </div>
+                        <!-- 双图片占位符 -->
+                        <div class="post-images-container">
+                            <div class="image-grid">
+                                <div>
+                                    <div class="image-placeholder" data-image="tommy_code_fractal.jpg">
+                                        <div class="image-placeholder-text">图片：tommy_code_fractal.jpg</div>
+                                    </div>
+                                    <div class="image-caption">代码递归算法示意图</div>
+                                </div>
+                                <div>
+                                    <div class="image-placeholder" data-image="tommy_plant_fractal.jpg">
+                                        <div class="image-placeholder-text">图片：tommy_plant_fractal.jpg</div>
+                                    </div>
+                                    <div class="image-caption">植物分形生长模式</div>
+                                </div>
+                            </div>
+                            <div class="image-caption" style="margin-top: 10px;">代码与自然的分形结构对比</div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="编程">#编程</span>
+                            <span class="tag" data-tag="算法">#算法</span>
+                            <span class="tag" data-tag="自然哲学">#自然哲学</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子5：与Sam老师的关系 -->
+                    <div class="post-item">
+                        <div class="post-header">
+                            <div class="post-author">Tommy</div>
+                            <div class="post-date">2026年8月8日</div>
+                        </div>
+                        <div class="post-content">
+                            今天和Sam老师讨论了分布式系统。他说现代网络就像菌丝网络，每个节点既是独立的又是整体的一部分。这个概念很有趣，让我想起了纽如社区的理念——个体与集体的和谐共存。
+                        </div>
+                        <!-- 文本内容 -->
+                        <div class="post-content" style="font-style: italic; color: #666; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+                            Sam是我的大学老师，在分布式系统方面很有研究。他最近也加入了纽如社区，我们经常讨论技术问题和社区理念。他说菌丝网络是自然界最高效的信息传输系统，这给了我很多启发。
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                            <span class="tag" data-tag="Sam">#Sam</span>
+                            <span class="tag" data-tag="分布式系统">#分布式系统</span>
+                            <span class="tag" data-tag="菌丝网络">#菌丝网络</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧侧边栏（无关于Tommy介绍） -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">统计信息</h3>
+                    <div class="info-item">
+                        <div class="info-label">发帖数</div>
+                        <div class="info-value">23 篇</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">获赞数</div>
+                        <div class="info-value">389 次</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">关注者</div>
+                        <div class="info-value">56 人</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">加入时间</div>
+                        <div class="info-value">2026年8月5日</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">技术专长</h3>
+                    <div class="info-item">
+                        <div class="info-label">主攻领域</div>
+                        <div class="info-value">网络协议、分布式系统</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">编程语言</div>
+                        <div class="info-value">Python, JavaScript, Rust</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">当前项目</div>
+                        <div class="info-value">三阶段密钥系统研究</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">常用标签</h3>
+                    <div class="post-tags" style="margin-top: 10px;">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="网络协议">#网络协议</span>
+                        <span class="tag" data-tag="编程">#编程</span>
+                        <span class="tag" data-tag="分布式系统">#分布式系统</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       <!-- 纽如社区官方主页（修正版） -->
+<div class="container page" id="official-homepage">
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" id="official-search-input" placeholder="搜索用户、标签或内容...">
+            <button class="search-btn" id="official-search-btn">搜索</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- 左侧主要内容区域 -->
+        <div class="forum-section">
+            <!-- 官方账号信息 -->
+            <div class="user-profile">
+                <div class="user-avatar">🌿</div>
+                <div class="user-info">
+                    <h2>纽如社区官方</h2>
+                    <p>官方账号 · 认证标识 ✓</p>
+                </div>
+            </div>
+
+            <!-- 帖子列表 -->
+            <div class="posts-container">
+                <!-- 置顶公告 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年8月25日</div>
+                    </div>
+                    <div class="post-content">
+                        <span style="display: inline-block; background-color: #ff9800; color: white; padding: 2px 10px; border-radius: 12px; font-size: 12px; margin-bottom: 12px;">📌 置顶</span>
+                        <br>
+                        欢迎来到纽如社区。<br><br>
+                        我们相信植物与人类之间的古老联结从未消失。在这里，你可以记录每一颗种子的萌发，分享与自然共处的瞬间，也可以找到那些和你一样渴望从根系中汲取力量的人。<br><br>
+                        社区尚在萌芽阶段，但每一份分享都会让它更加繁茂。<br>
+                        期待你的参与。🌱
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="公告">#公告</span>
+                    </div>
+                </div>
+
+                <!-- 帖子1：欢迎新芽（共同转发） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年8月31日</div>
+                    </div>
+                    <div class="post-content">
+                        纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                            <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                        </div>
+                        <div class="image-caption">社区官方 · 致新芽</div>
+                    </div>
+                    <!-- 转发列表（微博风格） -->
+                    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px solid #e0e0e0; color: #666; font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <span style="color: #1a472a; font-weight: 500;">🔁 转发</span>
+                        <a href="#" onclick="showPage('lily-homepage'); return false;" style="color: #2e8b57; text-decoration: none;">Lily</a>
+                        <span>·</span>
+                        <a href="#" onclick="showPage('monica-homepage'); return false;" style="color: #2e8b57; text-decoration: none;">Monica</a>
+                        <span>·</span>
+                        <a href="#" onclick="showPage('tommy-homepage'); return false;" style="color: #2e8b57; text-decoration: none;">Tommy</a>
+                        <span>·</span>
+                        <a href="#" onclick="showPage('sam-homepage'); return false;" style="color: #2e8b57; text-decoration: none;">Sam</a>
+                        <span>·</span>
+                        <a href="#" onclick="showPage('adam-homepage'); return false;" style="color: #2e8b57; text-decoration: none;">Adam</a>
+                        <span>等508人转发了这条帖子</span>
+                    </div>
+                    <div class="post-tags" style="margin-top: 10px;">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                    </div>
+                </div>
+
+                <!-- 帖子2：为每一位成员寄去种子 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年8月28日</div>
+                    </div>
+                    <div class="post-content">
+                        每一颗种子都承载着新田园的祝福。🌱<br><br>
+                        近期我们为所有新注册成员寄出了特别培育的种子礼包，内含三种适应性极强的本土植物。愿它们陪伴你度过每一次冥想与生长，从破土到抽芽，见证你与自然的联结。<br><br>
+                        尚未收到？请检查注册时填写的地址，或私信联系我们。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="official_seed_pack.jpg">
+                            <div class="image-placeholder-text">图片：official_seed_pack.jpg</div>
+                        </div>
+                        <div class="image-caption">种子礼包 · 新成员专享</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="种子计划">#种子计划</span>
+                        <span class="tag" data-tag="新手指引">#新手指引</span>
+                    </div>
+                </div>
+
+                <!-- 帖子3：缓解焦虑 · 植物的力量（已移除图片） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年8月30日</div>
+                    </div>
+                    <div class="post-content">
+                        焦虑是都市生活的常见信号，而植物有一种安静的力量。<br><br>
+                        社区里许多成员通过照料植物找回了内心的节奏——Lily的心理健康指数从40升至90，Monica在嫁接实验中找到了专注，Tommy说调试代码时看一眼绿植就能冷静下来。<br><br>
+                        你也可以试试：每天五分钟，观察一片叶子的舒展。不需要技巧，只需要存在。<br>
+                        欢迎在 #植物生长日记 分享你的片刻宁静。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="心理健康">#心理健康</span>
+                        <span class="tag" data-tag="植物疗法">#植物疗法</span>
+                        <span class="tag" data-tag="焦虑缓解">#焦虑缓解</span>
+                        <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                    </div>
+                </div>
+
+                <!-- 帖子4：【新增】今日社区天气 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年9月2日</div>
+                    </div>
+                    <div class="post-content">
+                        ☀️ 今日社区天气晴好，21–26℃，微风。<br>
+                        适合把植物搬到窗边晒晒太阳，也可以带着笔记本去附近的公园办公。<br>
+                        你那里的天气如何？拍下窗外的风景，发帖带上 #社区天气 吧。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="社区天气">#社区天气</span>
+                        <span class="tag" data-tag="日常">#日常</span>
+                    </div>
+                </div>
+
+                <!-- 帖子5：【新增】咖啡角读书分享 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年9月1日</div>
+                    </div>
+                    <div class="post-content">
+                        最近大家都在读什么书？📚<br><br>
+                        官方推荐：《植物的智能》《菌丝网络与人类社会》——前者讲植物如何感知环境，后者从生态学视角看连接。<br><br>
+                        欢迎在评论区留下你正在读的书，或是发帖带 #社区书单，我们会不定期整理成合集分享给更多新芽。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="社区书单">#社区书单</span>
+                        <span class="tag" data-tag="阅读">#阅读</span>
+                        <span class="tag" data-tag="推荐">#推荐</span>
+                    </div>
+                </div>
+
+                <!-- 帖子6：【新增】周末线上园艺交流会 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">纽如社区官方</div>
+                        <div class="post-date">2026年8月29日</div>
+                    </div>
+                    <div class="post-content">
+                        本周末（9月5日）20:00 将举办第一次线上园艺交流会 🌿<br>
+                        主题：「从种子到幼苗——新手最常忽略的三个细节」<br>
+                        分享人：Sam 老师 & Monica<br>
+                        参与方式：活动当天会在置顶帖发布会议链接，无需报名。<br><br>
+                        如果你也有养护小技巧想分享，欢迎私信官方账号，下一期可能就是你的主场。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="社区活动">#社区活动</span>
+                        <span class="tag" data-tag="园艺交流会">#园艺交流会</span>
+                        <span class="tag" data-tag="线上活动">#线上活动</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧侧边栏（已修正，不再移位） -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">关于官方</h3>
+                <p>纽如社区官方账号，发布社区公告、活动信息与新手指引。</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">社区统计</h3>
+                <div class="info-item">
+                    <div class="info-label">注册会员</div>
+                    <div class="info-value">999+ 人</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">官方帖子</div>
+                    <div class="info-value">10 篇</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">关注者</div>
+                    <div class="info-value">312 人</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">快捷导航</h3>
+                <div class="post-tags" style="margin-top: 10px;">
+                    <span class="tag" data-tag="新手指引">#新手指引</span>
+                    <span class="tag" data-tag="社区公告">#社区公告</span>
+                    <span class="tag" data-tag="活动">#活动</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sam主页 -->
+<div class="container page" id="sam-homepage">
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" id="sam-search-input" placeholder="搜索用户、标签或内容...">
+            <button class="search-btn" id="sam-search-btn">搜索</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- 左侧主要内容 -->
+        <div class="forum-section">
+            <!-- 用户信息 -->
+            <div class="user-profile">
+                <div class="user-avatar">S</div>
+                <div class="user-info">
+                    <h2>Sam</h2>
+                    <p>加入时间：2026年7月20日 | 职业：大学教师 · 分布式系统研究者</p>
+                </div>
+            </div>
+
+            <!-- 帖子区域 -->
+            <div class="posts-container">
+                <h3 class="section-title">Sam的帖子</h3>
+
+                <!-- 转发帖子（真实转发样式） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Sam</div>
+                        <div class="post-date">2026年8月31日</div>
+                    </div>
+                    <div class="forward-meta">
+                        🔁 转发了 <a href="#" onclick="showPage('official-homepage'); return false;" style="color: #1a472a; text-decoration: underline; text-decoration-style: dotted; font-weight: 500;">@纽如社区官方</a> 的帖子
+                    </div>
+                    <div class="quote-content">
+                        纽如社区论坛欢迎每一位新芽。你的到来是新的力量，让我们一起扎根自然，从植物中获得生长的能量。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="newrua_shared_post.jpg">
+                            <div class="image-placeholder-text">图片：newrua_shared_post.jpg</div>
+                        </div>
+                        <div class="image-caption">转发自社区官方账号</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                    </div>
+                </div>
+
+                <!-- 帖子1：与妻子May的旅行行李（双行李箱） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Sam</div>
+                        <div class="post-date">2026年8月26日</div>
+                    </div>
+                    <div class="post-content">
+                        和May一起收拾好了行李。两个箱子，两段期待已久的心灵之旅。May不爱社交，但她和我一样，渴望从自然中获得平静。这次假期，我们想一起种下纽如的新种子。
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-grid">
+                            <div>
+                                <div class="image-placeholder" data-image="sam_suitcase1.jpg">
+                                    <div class="image-placeholder-text">图片：sam_suitcase1.jpg</div>
+                                </div>
+                                <div class="image-caption">May的行李箱，她选了浅绿色</div>
+                            </div>
+                            <div>
+                                <div class="image-placeholder" data-image="sam_suitcase2.jpg">
+                                    <div class="image-placeholder-text">图片：sam_suitcase2.jpg</div>
+                                </div>
+                                <div class="image-caption">我的行李箱，里面装着几本植物学笔记</div>
+                            </div>
+                        </div>
+                        <div class="image-caption" style="margin-top: 10px;">两个行李箱，形影不离的约定</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="旅行">#旅行</span>
+                        <span class="tag" data-tag="May">#May</span>
+                        <span class="tag" data-tag="假期">#假期</span>
+                    </div>
+                </div>
+
+                <!-- 帖子2：收到两份新种子 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Sam</div>
+                        <div class="post-date">2026年8月22日</div>
+                    </div>
+                    <div class="post-content">
+                        社区寄来了两份新种子。一份给我，一份给May。May虽然没有论坛账号，但她和我一起照料植物，每天记录生长。她说，植物的根系比言语更懂彼此。🌱
+                    </div>
+                    <div class="post-images-container">
+                        <div class="image-placeholder" data-image="sam_two_seeds.jpg">
+                            <div class="image-placeholder-text">图片：sam_two_seeds.jpg</div>
+                        </div>
+                        <div class="image-caption">两份新种子，并排种下，等待萌芽</div>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                        <span class="tag" data-tag="种子">#种子</span>
+                        <span class="tag" data-tag="May">#May</span>
+                    </div>
+                </div>
+
+                <!-- 帖子3：与Tommy的师生对话（呼应Tommy主页） -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <div class="post-author">Sam</div>
+                        <div class="post-date">2026年8月18日</div>
+                    </div>
+                    <div class="post-content">
+                        和Tommy聊起分布式系统与菌丝网络的相似性。他说他把「脱壳·授粉·嫁接」写进了密钥系统，连接成功率提升了37%。年轻一代的工程师，正在让自然的隐喻变成代码。我很期待看到他的三阶段密钥项目完成。
+                    </div>
+                    <div class="post-content" style="font-style: italic; color: #666; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+                        Tommy是我最欣赏的学生之一。他把植物生长的节奏翻译成网络协议，这种跨学科的理解力很难得。May也说他像一株正在快速伸展的藤蔓。
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                        <span class="tag" data-tag="Tommy">#Tommy</span>
+                        <span class="tag" data-tag="分布式系统">#分布式系统</span>
+                        <span class="tag" data-tag="菌丝网络">#菌丝网络</span>
+                        <span class="tag" data-tag="三阶段密钥">#三阶段密钥</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">统计信息</h3>
+                <div class="info-item">
+                    <div class="info-label">发帖数</div>
+                    <div class="info-value">21 篇</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">获赞数</div>
+                    <div class="info-value">345 次</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">关注者</div>
+                    <div class="info-value">67 人</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">加入时间</div>
+                    <div class="info-value">2026年7月20日</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">家庭</h3>
+                <div class="info-item">
+                    <div class="info-label">妻子</div>
+                    <div class="info-value">May（未注册 · 共享账号）</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">共同爱好</div>
+                    <div class="info-value">园艺、旅行、菌丝网络研究</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">技术专长</h3>
+                <div class="info-item">
+                    <div class="info-label">主攻领域</div>
+                    <div class="info-value">分布式共识、生物计算</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">教学课程</div>
+                    <div class="info-value">网络协议分析、系统设计</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">近期项目</div>
+                    <div class="info-value">路由算法</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">常用标签</h3>
+                <div class="post-tags" style="margin-top: 10px;">
+                    <span class="tag" data-tag="新田园主义社区">#新田园主义社区</span>
+                    <span class="tag" data-tag="分布式系统">#分布式系统</span>
+                    <span class="tag" data-tag="菌丝网络">#菌丝网络</span>
+                    <span class="tag" data-tag="植物生长日记">#植物生长日记</span>
+                    <span class="tag" data-tag="May">#May</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                <div class="logo-icon" style="background-color: #2e8b57;">🌿</div>
+                <div class="logo-text">
+                    <h2 style="font-size: 24px;">纽如社区</h2>
+                    <p style="opacity: 0.9;">连接获得成长</p>
+                </div>
+            </div>
+            <p class="footer-text">© 2026 纽如社区. 保留所有权利. 本社区仅供研究交流使用.</p>
+            <p class="footer-text">联系方式: root://celium.core/contact</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 页面切换功能
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示指定页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 更新网页标题
+            updatePageTitle(pageId);
+            
+            // 更新用户状态区域（显示退出登录按钮）
+            updateUserStatus(pageId);
+            
+            // 页面切换后尝试加载图片
+            setTimeout(() => {
+                loadImages();
+            }, 100);
+        }
+        
+        // 更新网页标题
+        function updatePageTitle(pageId) {
+            const titles = {
+    'login-page': '纽如社区 - 登录',
+    'lily-homepage': '纽如社区 - Lily的主页',
+    'monica-homepage': '纽如社区 - Monica的主页',
+    'tommy-homepage': '纽如社区 - Tommy的主页',
+    'official-homepage': '纽如社区 - 官方主页',
+    'sam-homepage': '纽如社区 - Sam的主页'   // ✨ 新增
+};
+            
+            document.title = titles[pageId] || '纽如社区';
+        }
+        
+        // 更新用户状态区域
+        function updateUserStatus(pageId) {
+            const userStatus = document.getElementById('user-status');
+            
+            if (pageId === 'login-page') {
+                // 登录页面，清空用户状态（不显示任何文字）
+                userStatus.innerHTML = '';
+            } else {
+                // 用户主页，只显示退出登录按钮，不显示用户名
+                userStatus.innerHTML = `
+                    <button id="logout-btn" class="btn btn-small">退出登录</button>
+                `;
+                
+                // 添加退出登录功能
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    showPage('login-page');
+                    document.getElementById('invite-code').value = '';
+                });
+            }
+        }
+        
+        // 标签切换功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有标签的active类
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // 添加当前标签的active类
+                tab.classList.add('active');
+                
+                // 隐藏所有内容
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 显示对应内容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // 普通登录按钮点击事件
+        document.getElementById('regular-login-btn').addEventListener('click', () => {
+            const inviteCode = document.getElementById('invite-code').value.trim();
+            
+            if (!inviteCode) {
+                alert('请输入邀请码');
+                return;
+            }
+            
+            // 根据故事大纲，邀请码对应关系
+            const inviteMap = {
+                'newrua#998': 'lily-homepage',
+                'hunter#001': 'arnold-homepage',
+               };
+            
+            if (inviteMap[inviteCode]) {
+                const pageId = inviteMap[inviteCode];
+                const userName = pageId.split('-')[0];
+                alert(`登录成功！正在跳转至${userName}的主页...`);
+                showPage(pageId);
+            } else if (inviteCode.startsWith('newrua#')) {
+                const number = inviteCode.split('#')[1];
+                if (number && !isNaN(number) && number >= 1 && number <= 999) {
+                    alert(`登录成功！欢迎成员#${number}。\n\n提示：当前版本支持Lily、Monica和Tommy的主页。`);
+                    // 默认跳转到Lily主页
+                    showPage('lily-homepage');
+                } else {
+                    alert('邀请码格式正确，但编号无效。');
+                }
+            } else {
+                alert('邀请码无效，请检查后重试。');
+            }
+        });
+        
+        // 会员访问按钮点击事件
+        document.getElementById('member-access-btn').addEventListener('click', () => {
+            const memberUrl = document.getElementById('member-url').value.trim();
+            
+            if (!memberUrl) {
+                alert('请输入会员访问URL');
+                return;
+            }
+            
+            // 检查URL格式
+            if (memberUrl === 'root://celium.core/forum?key=newrualism:neuron:1444') {
+                alert('访问成功！正在跳转至会员论坛...\n\n提示：会员论坛页面正在开发中。');
+                // 在实际游戏中，这里会跳转到会员论坛页面
+            } else if (memberUrl.startsWith('root://celium.core/forum?key=')) {
+                alert('URL格式正确，但密钥无效。\n\n提示：培养植物的秘诀在于 = 脱壳:授粉:嫁接');
+            } else {
+                alert('URL格式不正确。\n\n正确格式：root://celium.core/forum?key=密钥');
+            }
+        });
+        
+        // 搜索功能
+        function setupSearch(searchInputId, searchBtnId) {
+            const searchInput = document.getElementById(searchInputId);
+            const searchBtn = document.getElementById(searchBtnId);
+            
+            if (!searchInput || !searchBtn) return;
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                
+                if (!query) {
+                    alert('请输入搜索内容');
+                    return;
+                }
+                
+                // 检查是否是用户名
+                const users = ['lily', 'monica', 'tommy', 'adam', 'sam'];
+                const userMap = {
+                    'lily': 'lily-homepage',
+                    'monica': 'monica-homepage',
+                    'tommy': 'tommy-homepage',
+                    'adam': 'adam-homepage',
+                    'sam': 'sam-homepage'
+                };
+                
+                // 检查是否是标签
+                const tags = ['新田园主义社区', '植物生长日记', '冥想', '心理健康', '音乐疗法', 
+                              '植物嫁接', '根茎冥想曲', '学术研究', '种子', '旅行', '假期', 
+                              '焦虑缓解', '网络协议', '编程', '分布式系统', '三阶段密钥'];
+                
+                if (users.includes(query)) {
+                    if (userMap[query]) {
+                        showPage(userMap[query]);
+                    } else {
+                        alert(`正在跳转到${query}的主页...\n\n提示：${query}的主页正在开发中，当前版本仅支持Lily、Monica和Tommy的主页。`);
+                    }
+                } else if (query.startsWith('#') && tags.includes(query.substring(1))) {
+                    const tag = query.substring(1);
+                    alert(`正在搜索包含 #${tag} 的帖子...\n\n提示：标签搜索功能正在开发中。`);
+                } else if (tags.includes(query)) {
+                    alert(`正在搜索包含 #${query} 的帖子...\n\n提示：标签搜索功能正在开发中。`);
+                } else {
+                    alert(`搜索内容: ${query}\n\n提示：搜索功能正在开发中，目前仅支持搜索用户名和标签。`);
+                }
+            }
+        }
+        
+        // 设置搜索功能
+        setupSearch('lily-search-input', 'lily-search-btn');
+        setupSearch('monica-search-input', 'monica-search-btn');
+        setupSearch('tommy-search-input', 'tommy-search-btn');
+        
+        // 标签点击事件
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                const tagName = e.target.getAttribute('data-tag');
+                alert(`正在搜索包含 #${tagName} 的帖子...\n\n提示：标签搜索功能正在开发中。`);
+            });
+        });
+        
+        // 图片加载功能
+        function loadImages() {
+            const imagePlaceholders = document.querySelectorAll('.image-placeholder');
+            
+            imagePlaceholders.forEach(placeholder => {
+                const imageName = placeholder.getAttribute('data-image');
+                if (!imageName) return;
+                
+                const imagePath = `images/${imageName}`;
+                
+                // 创建img元素
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = imageName;
+                img.onload = function() {
+                    // 清空占位符内容，只保留图片
+                    placeholder.innerHTML = '';
+                    placeholder.appendChild(img);
+                    placeholder.style.backgroundColor = 'transparent';
+                };
+                img.onerror = function() {
+                    // 图片加载失败，显示错误信息
+                    placeholder.innerHTML = `<div class="image-placeholder-text">图片加载失败: ${imageName}</div>`;
+                    placeholder.style.color = '#d32f2f';
+                };
+            });
+        }
+        // 为官方主页设置搜索功能
+setupSearch('official-search-input', 'official-search-btn');
+setupSearch('adam-search-input', 'adam-search-btn');
+setupSearch('sam-search-input', 'sam-search-btn');
+       // 设置搜索功能
+setupSearch('lily-search-input', 'lily-search-btn');
+setupSearch('monica-search-input', 'monica-search-btn');
+setupSearch('tommy-search-input', 'tommy-search-btn');
+// 为官方主页设置搜索功能
+setupSearch('official-search-input', 'official-search-btn');
+// 为Adam和Sam主页设置搜索功能
+setupSearch('adam-search-input', 'adam-search-btn');
+setupSearch('sam-search-input', 'sam-search-btn');
+        // 初始化页面
+        window.addEventListener('load', () => {
+            // 默认显示登录页面
+            showPage('login-page');
+            
+            console.log('提示：根据故事大纲，可用邀请码：');
+            console.log('1. Lily: newrua#998');
+            console.log('2. Monica: newrua#444');
+            console.log('3. Tommy: newrua#600');
+            console.log('4. Adam: newrua#001');
+            console.log('5. Sam: newrua#301');
+            console.log('\n图片文件建议（放在images文件夹中）：');
+            console.log('1. lily_suitcase.jpg - 行李箱图片');
+            console.log('2. lily_mental_index_1.jpg - 心理指数对比图片1（加入前）');
+            console.log('3. lily_mental_index_2.jpg - 心理指数对比图片2（加入后）');
+            console.log('4. lily_new_seeds.jpg - 新种子图片');
+            console.log('5. newrua_shared_post.jpg - Lily转发社区官方帖图片');
+            console.log('6. monica_music_plant.jpg - Monica的音乐工作室');
+            console.log('7. monica_new_seeds.jpg - Monica的新种子');
+            console.log('8. monica_tommy.jpg - Monica与Tommy的合照');
+            console.log('9. monica_grafting_1.jpg - 植物嫁接实验前');
+            console.log('10. monica_grafting_2.jpg - 植物嫁接实验后');
+            console.log('11. newrua_shared_post.jpg - Monica转发社区官方帖图片');
+            console.log('12. tommy_network_diagram.jpg - 网络协议三阶段密钥系统示意图');
+            console.log('13. tommy_monica_coding.jpg - Tommy和Monica一起研究代码');
+            console.log('14. tommy_new_seeds.jpg - Tommy的新种子');
+            console.log('15. tommy_code_fractal.jpg - 代码递归算法示意图');
+            console.log('16. tommy_plant_fractal.jpg - 植物分形生长模式');
+            console.log('17. newrua_shared_post.jpg - Tommy转发社区官方帖图片');
+        });
+    </script>
+</body>
+</html>

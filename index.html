@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>希望侦探社 · 内部系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== 全局重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #0a0e17;
+            color: #e0e5ec;
+            min-height: 100vh;
+        }
+
+        /* 页面切换 */
+        .page {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ---------- 介绍页样式（保留原有风格） ---------- */
+        .detective-intro {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .intro-background {
+            background-image: url('assets/intro-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+        }
+        .intro-overlay {
+            background: rgba(10, 14, 23, 0.85);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .intro-content {
+            max-width: 600px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(26, 34, 54, 0.7);
+            border-radius: 24px;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        .detective-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: #1e90ff;
+            font-size: 2rem;
+        }
+        .logo-subtitle {
+            color: #8da1b9;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+        .mission-brief {
+            margin-top: 30px;
+        }
+        .case-summary {
+            background: rgba(10, 14, 23, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(30, 144, 255, 0.2);
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .summary-item .label {
+            color: #8da1b9;
+        }
+        .summary-item .value {
+            color: white;
+            font-weight: 500;
+        }
+        .intro-message p {
+            color: #8da1b9;
+            margin: 8px 0;
+        }
+        .detective-btn {
+            background: linear-gradient(135deg, #1e90ff, #4caf50);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.2s;
+        }
+        .detective-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30,144,255,0.4);
+        }
+
+        /* ---------- 侦探社内网核心样式（与 lily-desktop.html 完全一致） ---------- */
+        .detective-net-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            background: #0a0e17;
+            font-size: 13px;
+        }
+
+        .function-sidebar {
+            width: 220px;
+            background: rgba(10, 14, 23, 0.95);
+            border-right: 1px solid rgba(30, 144, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .agency-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1e90ff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: #1e90ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: #8da1b9;
+        }
+
+        .function-menu {
+            flex: 1;
+            padding: 15px 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            color: #8da1b9;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(30, 144, 255, 0.15);
+            color: white;
+            border-left-color: #1e90ff;
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .status-dot.online {
+            width: 8px;
+            height: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #4caf50;
+        }
+
+        .case-number {
+            font-size: 0.75rem;
+            color: #8da1b9;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            height: 100%;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .chat-layout {
+            display: flex;
+            height: 100%;
+        }
+
+        .contact-list {
+            width: 200px;
+            background: rgba(10, 14, 23, 0.9);
+            border-right: 1px solid rgba(30, 144, 255, 0.2);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .list-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .list-search {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 4px 10px;
+        }
+
+        .list-search i {
+            color: #8da1b9;
+            font-size: 0.8rem;
+        }
+
+        .list-search input {
+            background: none;
+            border: none;
+            padding: 4px 6px;
+            color: white;
+            width: 100%;
+            outline: none;
+            font-size: 0.8rem;
+        }
+
+        .list-search input::placeholder {
+            color: #4f5e73;
+        }
+
+        .contact-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 2px;
+        }
+
+        .contact-item:hover {
+            background: rgba(30, 144, 255, 0.1);
+        }
+
+        .contact-item.active {
+            background: rgba(30, 144, 255, 0.15);
+        }
+
+        .contact-avatar {
+            width: 36px;
+            height: 36px;
+            background: #1e90ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .contact-status {
+            font-size: 0.65rem;
+            color: #8da1b9;
+        }
+
+        .unread-badge {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1e90ff;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+        }
+
+        .chat-interface {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #0f1420;
+        }
+
+        .chat-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .current-contact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-details .contact-name {
+            font-size: 0.95rem;
+        }
+        .contact-details .contact-role {
+            font-size: 0.7rem;
+            color: #8da1b9;
+        }
+
+        .chat-actions .action-btn {
+            background: none;
+            border: none;
+            color: #8da1b9;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 6px;
+        }
+
+        .chat-actions .action-btn:hover {
+            background: rgba(30, 144, 255, 0.2);
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        /* 消息气泡样式 (与 lily-desktop 一致) */
+        .message {
+            margin-bottom: 12px;
+            width: 100%;
+        }
+        .message.received {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .message.received .message-content {
+            background: rgba(30, 144, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 18px 18px 18px 4px;
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            color: #e0e5ec;
+            word-break: break-word;
+            font-size: 0.9rem;
+            max-width: 70%;
+            width: fit-content;
+            display: inline-block;
+        }
+        .message-sender {
+            font-size: 0.75rem;
+            color: #1e90ff;
+            margin-bottom: 4px;
+        }
+        .message-time {
+            font-size: 0.65rem;
+            color: #5f6e86;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        /* 工具页面 */
+        .tools-container {
+            padding: 20px;
+        }
+        .tools-container h2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .tool-card {
+            background: rgba(10, 14, 23, 0.8);
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            border-radius: 14px;
+            padding: 15px;
+            display: flex;
+            gap: 12px;
+        }
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(30, 144, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #1e90ff;
+            flex-shrink: 0;
+        }
+        .tool-content h3 {
+            color: white;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+        .tool-desc {
+            color: #8da1b9;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+        .tool-btn {
+            background: linear-gradient(135deg, #1e90ff, #4caf50);
+            border: none;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* 委托明细页面 */
+        .details-container {
+            padding: 20px;
+        }
+        .details-container h2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        .case-details {
+            background: rgba(10, 14, 23, 0.8);
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .detail-group {
+            margin-bottom: 20px;
+        }
+        .detail-group h3 {
+            color: #1e90ff;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            border-left: 3px solid #1e90ff;
+            padding-left: 8px;
+        }
+        .detail-item {
+            display: flex;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+        .detail-item .label {
+            width: 90px;
+            color: #8da1b9;
+        }
+        .detail-item .value {
+            flex: 1;
+            color: white;
+        }
+
+        /* 模态框 (黑客软件、记事本) */
+        .detective-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .detective-modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #1a2236;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 480px;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+        }
+        .modal-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        .modal-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: white;
+            font-size: 1rem;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: #8da1b9;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .modal-body {
+            padding: 15px;
+        }
+        .hacker-output {
+            background: #0a0e17;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: monospace;
+            margin: 15px 0;
+            max-height: 130px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+        }
+        .output-line {
+            color: #4caf50;
+            margin-bottom: 4px;
+        }
+        .input-with-button {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 14, 23, 0.8);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            border-radius: 6px;
+            margin: 8px 0;
+        }
+        .input-with-button input {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 8px 10px;
+            color: white;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .clear-btn {
+            background: none;
+            border: none;
+            color: #8da1b9;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 12px 0;
+        }
+        .primary-btn, .secondary-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .primary-btn {
+            background: linear-gradient(135deg, #1e90ff, #4caf50);
+            color: white;
+        }
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e5ec;
+        }
+        .notepad-tool textarea {
+            width: 100%;
+            height: 250px;
+            background: #0a0e17;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+            color: white;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .notepad-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a2236;
+            border: 1px solid #1e90ff;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            z-index: 3000;
+            display: none;
+            font-size: 0.85rem;
+        }
+        .toast.show {
+            display: block;
+        }
+
+        /* iframe 适配样式（保留） */
+        body.in-iframe {
+            overflow: auto !important;
+            min-height: 100vh;
+        }
+        .detective-net-container.in-iframe {
+            min-height: 100vh;
+        }
+        .main-content.in-iframe {
+            overflow: visible !important;
+        }
+        .chat-layout.in-iframe {
+            min-height: calc(100vh - 100px);
+        }
+        @media (max-width: 768px) {
+            .in-iframe .detective-net-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .in-iframe .function-sidebar {
+                width: 100%;
+                height: auto;
+            }
+            .in-iframe .main-content {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 游戏背景说明页面 -->
+    <div id="intro-page" class="page active">
+        <div class="detective-intro">
+            <div class="intro-background">
+                <div class="intro-overlay">
+                    <div class="intro-content">
+                        <div class="logo-container">
+                            <div class="detective-logo">
+                                <i class="fas fa-search"></i>
+                                <h1>希望侦探社</h1>
+                            </div>
+                            <p class="logo-subtitle">Hope Detective Agency</p>
+                        </div>
+                        
+                        <div class="mission-brief">
+                            <h2>新案件委托</h2>
+                            <div class="case-summary">
+                                <div class="summary-item">
+                                    <span class="label">案件编号:</span>
+                                    <span class="value">#2026-0917</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">委托人:</span>
+                                    <span class="value">Hani (哈妮)</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">调查对象:</span>
+                                    <span class="value">Lily (莉莉)</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">失踪时间:</span>
+                                    <span class="value">2026年8月31日</span>
+                                </div>
+                            </div>
+                            
+                            <div class="intro-message">
+                                <p>社长 Roland 有新的案件委托需要你处理。</p>
+                                <p>点击下方按钮进入侦探社内网系统，开始调查。</p>
+                            </div>
+                            
+                            <button id="enter-detective-net" class="detective-btn">
+                                <i class="fas fa-sign-in-alt"></i> 进入侦探社内网
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 侦探社内网界面 -->
+    <div id="chat-page" class="page">
+        <div class="detective-net-container">
+            <!-- 左侧功能栏 -->
+            <div class="function-sidebar">
+                <div class="sidebar-header">
+                    <div class="agency-logo">
+                        <i class="fas fa-search"></i>
+                        <span>希望侦探社</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">A</div>
+                        <div class="user-name">Amy</div>
+                        <div class="user-role">调查员</div>
+                    </div>
+                </div>
+                
+                <div class="function-menu">
+                    <div class="menu-item active" data-target="chat">
+                        <i class="fas fa-comments"></i>
+                        <span>内部聊天软件</span>
+                    </div>
+                    <div class="menu-item" data-target="tools">
+                        <i class="fas fa-tools"></i>
+                        <span>调查工具</span>
+                    </div>
+                    <div class="menu-item" data-target="details">
+                        <i class="fas fa-file-alt"></i>
+                        <span>委托明细</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <div class="system-status">
+                        <span class="status-dot online"></span>
+                        <span>系统在线</span>
+                    </div>
+                    <div class="case-number">
+                        案件: #2026-0917
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                <!-- 聊天软件页面 -->
+                <div id="chat-section" class="content-section active">
+                    <div class="chat-layout">
+                        <!-- 左侧会话人列表 -->
+                        <div class="contact-list">
+                            <div class="list-header">
+                                <h3><i class="fas fa-user-friends"></i> 联系人</h3>
+                                <div class="list-search">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="搜索联系人..." disabled>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-items">
+                                <div class="contact-item active" data-contact="roland">
+                                    <div class="contact-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Roland</div>
+                                        <div class="contact-status">社长 · 在线</div>
+                                    </div>
+                                    <div class="unread-badge" id="roland-badge">1</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右侧聊天界面 -->
+                        <div class="chat-interface">
+                            <!-- 聊天头部 -->
+                            <div class="chat-header">
+                                <div class="current-contact">
+                                    <div class="contact-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <div class="contact-name">Roland</div>
+                                        <div class="contact-role">社长 · 希望侦探社</div>
+                                    </div>
+                                </div>
+                                <div class="chat-actions">
+                                    <button class="action-btn" title="案件信息">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 聊天消息区域 -->
+                            <div class="chat-messages" id="chat-messages">
+                                <!-- 消息会动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 调查工具页面 -->
+                <div id="tools-section" class="content-section">
+                    <div class="tools-container">
+                        <h2><i class="fas fa-tools"></i> 调查工具</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card" id="hacker-tool">
+                                <div class="tool-icon">
+                                    <i class="fas fa-terminal"></i>
+                                </div>
+                                <div class="tool-content">
+                                    <h3>黑客软件</h3>
+                                    <p class="tool-desc">输入IP地址访问目标电脑系统</p>
+                                    <button class="tool-btn" id="open-hacker-tool">
+                                        <i class="fas fa-play"></i> 启动
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="tool-card" id="notepad-tool">
+                                <div class="tool-icon">
+                                    <i class="fas fa-clipboard"></i>
+                                </div>
+                                <div class="tool-content">
+                                    <h3>侦探记事本</h3>
+                                    <p class="tool-desc">记录案件线索和调查笔记</p>
+                                    <button class="tool-btn" id="open-notepad-tool">
+                                        <i class="fas fa-edit"></i> 打开
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 委托明细页面 -->
+                <div id="details-section" class="content-section">
+                    <div class="details-container">
+                        <h2><i class="fas fa-file-alt"></i> 委托明细</h2>
+                        <div class="case-details">
+                            <div class="detail-group">
+                                <h3>委托人信息</h3>
+                                <div class="detail-item">
+                                    <span class="label">姓名:</span>
+                                    <span class="value">Hani (哈妮)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">关系:</span>
+                                    <span class="value">Lily的姐姐</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">报案时间:</span>
+                                    <span class="value">2026年9月17日</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-group">
+                                <h3>失踪者信息</h3>
+                                <div class="detail-item">
+                                    <span class="label">姓名:</span>
+                                    <span class="value">Lily (莉莉)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">最后联系:</span>
+                                    <span class="value">2026年8月31日</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">最后消息:</span>
+                                    <span class="value">"我将度过有史以来最快乐的一次假期。"</span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-group">
+                                <h3>关键线索</h3>
+                                <div class="detail-item">
+                                    <span class="label">电脑IP地址:</span>
+                                    <span class="value">188.444.2</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">手机号:</span>
+                                    <span class="value">051-1444</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 黑客软件弹窗 -->
+    <div id="hacker-modal" class="detective-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-terminal"></i> 侦探社黑客软件</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="hacker-tool">
+                    <div class="tool-description">
+                        <p><i class="fas fa-info-circle"></i> 请输入目标电脑的IP地址进行连接：</p>
+                    </div>
+                    
+                    <div class="ip-input-section">
+                        <div class="input-group">
+                            <label for="hacker-ip">IP地址:</label>
+                            <div class="input-with-button">
+                                <input type="text" id="hacker-ip" placeholder="例如: 188.444.2">
+                                <button id="clear-ip" class="clear-btn" title="清空">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button id="hack-btn" class="primary-btn">
+                                <i class="fas fa-play"></i> 进入
+                            </button>
+                            <button class="secondary-btn" onclick="document.querySelector('.modal-close').click()">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hacker-output" id="hacker-output">
+                        <div class="output-line">> 希望侦探社专用调查工具 v2.1</div>
+                        <div class="output-line">> 系统启动完成...</div>
+                        <div class="output-line">> 等待输入IP地址...</div>
+                    </div>
+                    
+                    <div class="tool-note">
+                        <i class="fas fa-exclamation-triangle"></i> 注意：仅限合法调查使用。请输入由委托人提供的IP地址。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 记事本弹窗 -->
+    <div id="notepad-modal" class="detective-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-clipboard"></i> 侦探记事本</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="notepad-tool">
+                    <textarea id="notepad-text" placeholder="在这里记录案件线索、调查进展、疑问和待办事项..."></textarea>
+                    <div class="notepad-actions">
+                        <button id="save-notepad" class="primary-btn">
+                            <i class="fas fa-save"></i> 保存
+                        </button>
+                        <button id="clear-notepad" class="secondary-btn">
+                            <i class="fas fa-trash"></i> 清空
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 提示消息 -->
+    <div id="message-toast" class="toast">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+    
+    <script>
+        // 页面切换：点击进入按钮显示内网
+        document.getElementById('enter-detective-net').addEventListener('click', function() {
+            document.getElementById('intro-page').classList.remove('active');
+            document.getElementById('chat-page').classList.add('active');
+        });
+
+        // 菜单切换
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.content-section');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const target = this.dataset.target;
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                sections.forEach(s => {
+                    s.classList.remove('active');
+                    if (s.id === target + '-section') s.classList.add('active');
+                });
+            });
+        });
+
+        // 黑客软件相关
+        const hackerModal = document.getElementById('hacker-modal');
+        const notepadModal = document.getElementById('notepad-modal');
+        const openHacker = document.getElementById('open-hacker-tool');
+        const openNotepad = document.getElementById('open-notepad-tool');
+        const hackBtn = document.getElementById('hack-btn');
+        const clearIp = document.getElementById('clear-ip');
+        const hackerIp = document.getElementById('hacker-ip');
+        const hackerOutput = document.getElementById('hacker-output');
+        const saveNotepad = document.getElementById('save-notepad');
+        const clearNotepad = document.getElementById('clear-notepad');
+        const notepadText = document.getElementById('notepad-text');
+        const toast = document.getElementById('message-toast');
+        const toastMsg = document.getElementById('toast-message');
+        const modalCloses = document.querySelectorAll('.modal-close');
+
+        function showToast(msg) {
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function openModal(modal) {
+            modal.classList.add('active');
+        }
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+        }
+
+        if (openHacker) openHacker.addEventListener('click', () => openModal(hackerModal));
+        if (openNotepad) openNotepad.addEventListener('click', () => openModal(notepadModal));
+
+        if (clearIp) {
+            clearIp.addEventListener('click', () => {
+                hackerIp.value = '';
+                hackerOutput.innerHTML = `
+                    <div class="output-line">> 希望侦探社专用调查工具 v2.1</div>
+                    <div class="output-line">> 系统启动完成...</div>
+                    <div class="output-line">> 等待输入IP地址...</div>
+                `;
+            });
+        }
+
+        if (hackBtn) {
+            hackBtn.addEventListener('click', () => {
+                const ip = hackerIp.value.trim();
+                if (ip === '188.444.2') {
+                    hackerOutput.innerHTML = `
+                        <div class="output-line">> 正在连接 ${ip}...</div>
+                        <div class="output-line">> 绕过防火墙... 成功</div>
+                        <div class="output-line">> 建立安全连接...</div>
+                        <div class="output-line">> 连接成功！获得Lily电脑访问权限</div>
+                        <div class="output-line">> 准备进入桌面系统...</div>
+                    `;
+                    hackerOutput.scrollTop = hackerOutput.scrollHeight;
+                    setTimeout(() => {
+                        showToast('成功连接到目标电脑！即将进入桌面系统...');
+                        setTimeout(() => {
+                            window.location.href = 'lily-desktop.html?from=hacker';
+                        }, 2000);
+                    }, 2000);
+                } else {
+                    hackerOutput.innerHTML += `<div class="output-line">> 错误：IP地址无效</div>`;
+                    hackerOutput.scrollTop = hackerOutput.scrollHeight;
+                    showToast('IP地址错误');
+                }
+            });
+        }
+
+        if (saveNotepad) {
+            saveNotepad.addEventListener('click', () => {
+                localStorage.setItem('detectiveNotes', notepadText.value);
+                showToast('记事本已保存');
+            });
+        }
+        if (clearNotepad) {
+            clearNotepad.addEventListener('click', () => {
+                if (confirm('确定清空？')) {
+                    notepadText.value = '';
+                    localStorage.removeItem('detectiveNotes');
+                    showToast('已清空');
+                }
+            });
+        }
+        const savedNotes = localStorage.getItem('detectiveNotes');
+        if (savedNotes && notepadText) notepadText.value = savedNotes;
+
+        modalCloses.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.detective-modal');
+                if (modal) closeModal(modal);
+            });
+        });
+
+        if (hackerIp) {
+            hackerIp.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9.]/g, '');
+                const parts = this.value.split('.');
+                if (parts.length > 4) this.value = parts.slice(0, 4).join('.');
+            });
+        }
+
+        // 自动添加 Roland 消息（一次性添加，无延迟）
+        const chatMessages = document.getElementById('chat-messages');
+        const dialogues = [
+            "Amy，我们接到了一个新委托，委托人拜托我们调查她的妹妹的下落。你刚入行没多久，我会帮你一起完成。",
+            "今天是2026年9月17日，一位名叫Hani的女性向我们希望侦探社递交了调查委托：关于她的妹妹Lily的失踪案调查。",
+            "Lily最后一次与Hani联系是在2026年8月31日，自9月起再无音讯。警察对这起失踪案调查进度缓慢，所以心急的Hani找上了我们希望侦探社，希望我们能帮她找到失踪的妹妹。",
+            "Hani告诉我，最后一次Lily给她发的消息内容为：<strong><em>\"我将度过有史以来最快乐的一次假期。\"</em></strong>",
+            "除此之外，Hani还向我提供了Lily的电脑IP地址：<strong><em>188.444.2</em></strong>",
+            "我们希望侦探社向员工提供了独家<strong>黑客软件</strong>，可通过电脑IP地址黑入对方电脑。在内网开始你调查的第一步吧，Amy。如果有需要记录的关键信息，也可以使用内网的<strong>记事本</strong>功能。"
+        ];
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+        function addMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'message received';
+            const time = getCurrentTime();
+            div.innerHTML = `<div class="message-sender">Roland</div><div class="message-content">${text}</div><div class="message-time">${time}</div>`;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        if (chatMessages && chatMessages.children.length === 0) {
+            dialogues.forEach(text => {
+                addMessage(text);
+            });
+        }
+    </script>
+</body>
+</html>

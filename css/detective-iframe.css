@@ -1,0 +1,84 @@
+/* detective-iframe.css - 专门用于优化iframe中侦探社内网的显示 */
+/* 这个文件可以嵌入到index.html的head中 */
+
+/* 当页面在iframe中时应用的样式 */
+body.in-iframe {
+    overflow: auto !important;
+    height: auto !important;
+    min-height: 100vh;
+}
+
+/* 调整侦探社内网容器在iframe中的显示 */
+.detective-net-container.in-iframe {
+    height: auto !important;
+    min-height: 100vh;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 调整侧边栏在iframe中的高度 */
+.function-sidebar.in-iframe {
+    height: auto;
+    min-height: 100vh;
+}
+
+/* 调整主内容区域 */
+.main-content.in-iframe {
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+}
+
+/* 调整聊天布局 */
+.chat-layout.in-iframe {
+    height: auto !important;
+    min-height: calc(100vh - 60px);
+}
+
+/* 调整聊天消息区域 */
+.chat-messages.in-iframe {
+    max-height: none !important;
+    height: auto;
+    min-height: 300px;
+}
+
+/* 隐藏不必要的元素 */
+.in-iframe .return-desktop-btn {
+    display: none !important;
+}
+
+/* 调整工具页面 */
+.tools-container.in-iframe {
+    height: auto;
+    min-height: calc(100vh - 100px);
+}
+
+/* 调整委托明细页面 */
+.details-container.in-iframe {
+    height: auto;
+    min-height: calc(100vh - 100px);
+}
+
+/* 确保模态框在iframe中正确显示 */
+.detective-modal.in-iframe {
+    position: fixed !important;
+    z-index: 10000;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .in-iframe .detective-net-container {
+        flex-direction: column;
+    }
+    
+    .in-iframe .function-sidebar {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+    }
+    
+    .in-iframe .main-content {
+        width: 100%;
+    }
+}

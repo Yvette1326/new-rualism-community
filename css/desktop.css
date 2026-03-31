@@ -1,0 +1,1544 @@
+/* ===== Lily电脑桌面样式 ===== */
+.desktop-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: #000;
+}
+
+/* 桌面背景 */
+.desktop {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../assets/wallpapers/lily-wallpaper-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 桌面图标 - 使用网格布局适应屏幕 */
+.desktop-icons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-auto-rows: minmax(100px, auto);
+    gap: 20px;
+    z-index: 1;
+    width: calc(100vw - 40px);
+    max-width: 600px;
+}
+
+.desktop-icon {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 80px;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.desktop-icon:hover {
+    transform: scale(1.05);
+}
+
+.desktop-icon:active {
+    transform: scale(0.95);
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.icon-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.desktop-icon:hover .icon-img {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.browser-icon {
+    background: linear-gradient(135deg, #0066cc 0%, #004d99 100%);
+}
+
+/* Mycelium Messenger图标 */
+.messenger-icon {
+    background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+}
+
+/* 回收站图标 */
+.recycle-icon {
+    background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+}
+
+/* 侦探社内网图标 */
+.detective-icon {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+}
+
+.icon-label {
+    color: white;
+    font-size: 0.85rem;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 3px 8px;
+    border-radius: 8px;
+    max-width: 100px;
+    word-break: break-word;
+    margin-top: 5px;
+}
+
+/* 系统托盘 */
+.system-tray {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    height: 50px;
+    box-sizing: border-box;
+}
+
+.start-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 120, 212, 0.9);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.start-menu:hover {
+    background: rgba(0, 120, 212, 1);
+}
+
+.start-menu i {
+    font-size: 1.2rem;
+}
+
+.tray-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.time-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+#current-time {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: white;
+}
+
+#current-date {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 应用程序窗口 - 响应式调整 */
+.app-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    max-height: 800px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    display: none;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    min-height: 400px;
+}
+
+.app-window.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.window-header {
+    background: #f3f3f3;
+    padding: 0 15px;
+    height: 40px;
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+.window-controls {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.window-btn {
+    background: none;
+    border: none;
+    color: #666;
+    width: 46px;
+    height: 40px;
+    min-width: 46px;
+    min-height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.window-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.close-btn:hover {
+    background: #e81123;
+    color: white;
+}
+
+.window-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* 浏览器容器 */
+.browser-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 标签栏 */
+.tab-bar {
+    background: #f0f0f0;
+    padding: 0 10px;
+    height: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tab {
+    background: white;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    height: 100%;
+    border-radius: 5px 5px 0 0;
+    margin-right: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tab.active {
+    background: white;
+}
+
+.tab-close {
+    background: none;
+    border: none;
+    color: #999;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    flex-shrink: 0;
+}
+
+.tab-close:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+/* 浏览器工具栏 */
+.browser-toolbar {
+    background: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    background: #f0f0f0;
+}
+
+.address-bar {
+    flex: 1;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #333;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toolbar-buttons {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.tool-btn {
+    background: none;
+    border: none;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.tool-btn:hover {
+    background: #f0f0f0;
+}
+
+/* 浏览器内容区域 */
+.browser-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: white;
+    min-height: 0;
+}
+
+/* 稻谷搜索主页 */
+.daogu-homepage {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+.daogu-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.daogu-logo i {
+    font-size: 2.5rem;
+    color: #0066cc;
+}
+
+.daogu-logo h1 {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: 400;
+}
+
+.search-container {
+    margin-bottom: 30px;
+}
+
+.search-box {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #0066cc;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+    width: 100%;
+}
+
+#search-input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    color: #333;
+    min-width: 0;
+}
+
+#search-btn {
+    background: #0066cc;
+    color: white;
+    border: none;
+    padding: 0 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+#search-btn:hover {
+    background: #0052a3;
+}
+
+/* 快速链接 */
+.quick-links {
+    margin-top: 30px;
+}
+
+.quick-links h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.link-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    min-height: 80px;
+    justify-content: center;
+}
+
+.link-item:hover {
+    background: white;
+    border-color: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.link-item i {
+    font-size: 1.5rem;
+    color: #0066cc;
+}
+
+.link-item span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* 返回侦探社按钮 */
+.return-btn {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    background: rgba(0, 102, 204, 0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 999;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+    max-width: calc(100vw - 40px);
+}
+
+.return-btn:hover {
+    background: rgba(0, 102, 204, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.6);
+}
+
+/* 返回桌面按钮（在侦探社内网显示） */
+.return-desktop-btn {
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    max-width: calc(100vw - 40px);
+}
+
+.return-desktop-btn.show {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.return-desktop-btn:hover {
+    background: rgba(76, 175, 80, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+}
+
+/* ===== 修复：侦探社内网窗口样式优化 ===== */
+.detective-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 1400px;
+    height: 85%;
+    max-height: 900px;
+    background: #0a0e17;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    display: none;
+    overflow: hidden;
+    z-index: 1000;
+    min-width: 320px;
+    min-height: 480px;
+}
+
+.detective-window.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.detective-header {
+    background: #131825;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+    flex-shrink: 0;
+    min-height: 50px;
+}
+
+.detective-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1e90ff;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+.detective-controls {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.detective-btn {
+    background: rgba(30, 144, 255, 0.1);
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    color: #1e90ff;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.detective-btn:hover {
+    background: rgba(30, 144, 255, 0.2);
+}
+
+.detective-content {
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+    position: relative;
+}
+
+.detective-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* ===== 新增：优化侦探社内网iframe显示 ===== */
+/* 确保iframe内容能够正确缩放和显示 */
+.detective-iframe-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+/* 隐藏iframe滚动条但保留功能 */
+.detective-iframe::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.detective-iframe::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.detective-iframe::-webkit-scrollbar-thumb {
+    background: rgba(30, 144, 255, 0.3);
+    border-radius: 4px;
+}
+
+.detective-iframe::-webkit-scrollbar-thumb:hover {
+    background: rgba(30, 144, 255, 0.5);
+}
+
+/* ===== 修复：侦探社内网加载状态 ===== */
+.detective-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0e17;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.detective-loading.hidden {
+    display: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(30, 144, 255, 0.3);
+    border-top-color: #1e90ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== 修复：侦探社内网内容适配 ===== */
+/* 确保侦探社内网页面在iframe中正确显示 */
+.detective-iframe body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+.detective-iframe #chat-page {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.detective-iframe .detective-net-container {
+    min-height: 100%;
+    display: flex;
+}
+
+/* ===== 新增：安装特效样式 ===== */
+.installation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.installation-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.installation-content {
+    background: rgba(26, 34, 54, 0.9);
+    border-radius: 15px;
+    padding: 40px;
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.install-icon {
+    font-size: 60px;
+    color: #1e90ff;
+    margin-bottom: 20px;
+    animation: spin 2s linear infinite;
+}
+
+.install-title {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.install-message {
+    color: #8da1b9;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e90ff, #4caf50);
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.install-details {
+    color: #8da1b9;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+/* ===== 新增：Mycelium Messenger窗口样式 ===== */
+.messenger-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.login-screen {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+}
+
+.messenger-logo {
+    font-size: 60px;
+    color: #9c27b0;
+    margin-bottom: 20px;
+}
+
+.login-screen h2 {
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+}
+
+.login-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #9c27b0;
+    box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+}
+
+.login-btn {
+    width: 100%;
+    background: #9c27b0;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background: #7b1fa2;
+}
+
+.login-note {
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    max-width: 300px;
+    margin: 20px auto 0;
+    line-height: 1.4;
+}
+
+/* ===== 新增：回收站窗口样式 ===== */
+.recycle-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.recycle-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px 20px 15px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.recycle-icon-large {
+    font-size: 40px;
+    color: #f44336;
+    flex-shrink: 0;
+}
+
+.recycle-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recycle-info h3 {
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+}
+
+.recycle-info p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.recycle-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    align-content: start;
+}
+
+.recycle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #eee;
+    background: #fafafa;
+    min-height: 120px;
+    justify-content: center;
+}
+
+.recycle-item:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-icon {
+    width: 50px;
+    height: 50px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 24px;
+}
+
+.item-info {
+    text-align: center;
+    width: 100%;
+}
+
+.item-name {
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 3px;
+    word-break: break-word;
+}
+
+.item-size {
+    color: #999;
+    font-size: 12px;
+}
+
+/* ===== 新增：桌面通知样式 ===== */
+.desktop-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(26, 34, 54, 0.95);
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    border-radius: 10px;
+    padding: 15px 20px;
+    max-width: 350px;
+    width: calc(100% - 40px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10000;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.desktop-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(30, 144, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e90ff;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-content h4 {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.notification-content p {
+    color: #8da1b9;
+    font-size: 12px;
+    margin: 0;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* ===== 应用窗口激活状态的z-index调整 ===== */
+.app-window.active {
+    z-index: 100;
+}
+
+.detective-window.active {
+    z-index: 101;
+}
+
+/* ===== 系统托盘z-index调整 ===== */
+.system-tray {
+    z-index: 200;
+}
+
+/* ===== 返回按钮位置调整 ===== */
+.return-btn {
+    z-index: 199;
+}
+
+/* ===== 新增：侦探社内网全屏模式 ===== */
+.detective-window.fullscreen {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    z-index: 10000;
+}
+
+.detective-window.fullscreen .detective-content {
+    height: calc(100% - 50px);
+}
+
+/* ===== 响应式调整：侦探社内网窗口 ===== */
+@media (max-width: 1200px) {
+    .detective-window {
+        width: 98%;
+        height: 90%;
+        max-height: 850px;
+    }
+}
+
+@media (max-width: 768px) {
+    .detective-window {
+        width: 100%;
+        height: 95%;
+        max-height: none;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+    
+    .detective-header {
+        padding: 10px 15px;
+    }
+    
+    .detective-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== 滚动条样式 ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* ===== 响应式调整 ===== */
+@media (max-width: 768px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        grid-auto-rows: minmax(90px, auto);
+        gap: 15px;
+        top: 15px;
+        left: 15px;
+        width: calc(100vw - 30px);
+    }
+    
+    .desktop-icon {
+        width: 70px;
+        height: 90px;
+    }
+    
+    .icon-img {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .icon-label {
+        font-size: 0.75rem;
+    }
+    
+    .app-window {
+        width: 95%;
+        height: 85%;
+        max-height: 700px;
+    }
+    
+    .detective-window {
+        width: 98%;
+        height: 90%;
+        max-height: 800px;
+    }
+    
+    .window-title {
+        font-size: 0.8rem;
+        max-width: 60%;
+    }
+    
+    .browser-toolbar {
+        flex-wrap: wrap;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+    
+    .address-bar {
+        order: 3;
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .links-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+    
+    .link-item {
+        padding: 10px;
+        min-height: 70px;
+    }
+    
+    .return-btn {
+        bottom: 65px;
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .return-desktop-btn {
+        bottom: 65px;
+        left: 15px;
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .recycle-items {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 0 15px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        grid-auto-rows: minmax(80px, auto);
+        gap: 12px;
+        top: 10px;
+        left: 10px;
+        width: calc(100vw - 20px);
+    }
+    
+    .desktop-icon {
+        width: 60px;
+        height: 80px;
+    }
+    
+    .icon-img {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .icon-label {
+        font-size: 0.7rem;
+        padding: 2px 5px;
+    }
+    
+    .system-tray {
+        padding: 6px 15px;
+        height: 45px;
+    }
+    
+    .start-menu {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .time-display {
+        gap: 1px;
+    }
+    
+    #current-time {
+        font-size: 0.85rem;
+    }
+    
+    #current-date {
+        font-size: 0.7rem;
+    }
+    
+    .app-window {
+        width: 98%;
+        height: 90%;
+        border-radius: 6px;
+    }
+    
+    .detective-window {
+        width: 100%;
+        height: 95%;
+        border-radius: 6px;
+    }
+    
+    .window-header {
+        padding: 0 10px;
+        height: 35px;
+    }
+    
+    .window-title {
+        font-size: 0.75rem;
+        gap: 5px;
+    }
+    
+    .window-btn {
+        width: 40px;
+        height: 35px;
+    }
+    
+    .daogu-logo {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .daogu-logo i {
+        font-size: 2rem;
+    }
+    
+    .daogu-logo h1 {
+        font-size: 2rem;
+    }
+    
+    .search-box {
+        border-radius: 20px;
+    }
+    
+    #search-input {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    #search-btn {
+        padding: 0 20px;
+    }
+    
+    .quick-links h3 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+    
+    .links-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .link-item i {
+        font-size: 1.3rem;
+    }
+    
+    .link-item span {
+        font-size: 0.8rem;
+    }
+    
+    .return-btn {
+        bottom: 60px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .return-desktop-btn {
+        bottom: 60px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .detective-header {
+        padding: 10px 15px;
+    }
+    
+    .detective-title {
+        font-size: 0.9rem;
+    }
+    
+    .detective-btn {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .installation-content {
+        padding: 30px 20px;
+    }
+    
+    .install-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    
+    .install-title {
+        font-size: 1.3rem;
+    }
+    
+    .install-message {
+        font-size: 0.9rem;
+    }
+    
+    .messenger-logo {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    
+    .login-screen h2 {
+        font-size: 1.5rem;
+    }
+    
+    .recycle-items {
+        grid-template-columns: 1fr;
+    }
+    
+    .desktop-notification {
+        top: 15px;
+        right: 15px;
+        padding: 12px 15px;
+    }
+    
+    .notification-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+/* ===== 高DPI屏幕适配 ===== */
+@media (min-resolution: 192dpi) {
+    .icon-img {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .desktop-icon:hover .icon-img {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .window-header {
+        border-bottom-width: 0.5px;
+    }
+    
+    .tab-bar {
+        border-bottom-width: 0.5px;
+    }
+    
+    .browser-toolbar {
+        border-bottom-width: 0.5px;
+    }
+}
+
+/* ===== 横屏模式适配 ===== */
+@media (orientation: landscape) and (max-height: 600px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        grid-auto-rows: minmax(80px, auto);
+        gap: 15px;
+    }
+    
+    .desktop-icon {
+        width: 70px;
+        height: 80px;
+    }
+    
+    .icon-img {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .icon-label {
+        font-size: 0.75rem;
+    }
+    
+    .system-tray {
+        height: 40px;
+    }
+    
+    .return-btn {
+        bottom: 50px;
+    }
+    
+    .return-desktop-btn {
+        bottom: 50px;
+    }
+}
